@@ -23,15 +23,18 @@ const (
 	jsonContentType = "application/json"
 	formContentType = "application/x-www-form-urlencoded"
 )
-
+//定义超时时间
 // DefaultTimeout defines the request timeout limit, avoiding client hanging when the
 // remote server does not responde.
+
 const DefaultTimeout = 3 * time.Second
 
 // debugEnv is the environment variable that toggles debug mode.
 // 1 means turn on debug mode, 0 or any other value(empty value) means turn off debug mode
+//定义bug 模式
 const debugEnv = "GOHTTP_DEBUG"
 
+//基本验证类
 type basicAuth struct {
 	username string
 	password string
@@ -48,6 +51,7 @@ type fileForm struct {
 // The main function is to parse resp body for users.
 // In the future, it can gives more information, like request elapsed time,
 // redirect history etc.
+//重新定义 http.Response
 type GoResponse struct {
 	*http.Response
 }
