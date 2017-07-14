@@ -17,7 +17,7 @@ import (
 
 	"github.com/google/go-querystring/query"
 )
-
+// 定义常量
 const (
 	contentType     = "Content-Type"
 	jsonContentType = "application/json"
