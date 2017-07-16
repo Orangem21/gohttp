@@ -25,7 +25,7 @@ func main() {
 	//启动goroutine来启动工作
 	wg.Add(numberGoroutine)
 
-	for gr := 1; gr < numberGoroutine; gr ++ {
+	for gr := 1; gr <= numberGoroutine; gr ++ {
 		go worker(tasks, gr)
 	}
 	for post := 2; post <= taskLoad; post ++ {
