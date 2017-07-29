@@ -119,7 +119,57 @@ func (c *Config) Load(file string) error{
 		return errors.New("[6]解析regex.image时出错")
 	}
 
+	pageRegs,ok := reg["page"].([]interface{})
+	if ok{
+		c.PageRegex = make([]*regexp.Regexp,len(pageRegs))
+		for i,val := range pageRegs{
+			valStr := val.(string)
+			c.PageRegex[i],err = regexp.Compile(valStr)
+			if err != nil {
+				return errors.New("[7]解析正则表达式" + valStr + "时出错")
+			}
+		}
+
+	}
+	imgPageRegs, ok := reg["imgInPage"].([]interface{})
+	if ok {
+		c.ImgPageRegex = make([]*regexp.Regexp, len(imgPageRegs))
+		for i, val := range imgPageRegs {
+			valStr := val.(string)
+			c.ImgPageRegex[i], err = regexp.Compile(valStr)
+			if err != nil {
+				return errors.New("[9]解析正则表达式" + valStr + "时出错")
+			}
+		}
+	} else {
+		return errors.New("[10]解析regex.imgInPage时出错")
+	}
+
+	hrefRegex, ok := reg["href"].([]interface{})
+	if ok {
+		c.HrefRegex = make([]*MatchExp, len(hrefRegex))
+		for i, val := range hrefRegex {
+			obj, ok := val.(map[string]interface{})
+			if !ok {
+				return errors.New("[11]解析regex.href时出错")
+			}
+
+			exp := obj["exp"].(string)
+
+			c.HrefRegex[i] = &MatchExp{}
+			c.HrefRegex[i].Match = int(obj["match"].(float64))
+			c.HrefRegex[i].Exp, err = regexp.Compile(exp)
+			if err != nil {
+				return errors.New("[12]解析正则表达式" + exp + "时出错")
+			}
+		}
+	} else {
+		return errors.New("[13]解析regex.hrefRegex时出错")
+	}
+
+	return nil
 }
+
 
 
 
