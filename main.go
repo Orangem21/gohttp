@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/url"
-	"./conf.go"
+	"gohttp/conf"
 	"time"
 	"regexp"
 )
