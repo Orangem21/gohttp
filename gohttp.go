@@ -34,6 +34,7 @@ const DefaultTimeout = 3 * time.Second
 //定义bug 模式
 const debugEnv = "GOHTTP_DEBUG"
 
+
 //基本验证类
 type basicAuth struct {
 	username string
@@ -65,6 +66,8 @@ func (resp *GoResponse) AsString() (string, error) {
 	}
 	return string(data), nil
 }
+//添加了一个方法
+//resp.AsString(HttpResponse.Body)
 
 // AsBytes return the response body as byte slice
 // An error will be returned if the body can not be read as bytes
