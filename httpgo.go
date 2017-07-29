@@ -182,6 +182,38 @@ func (c *Client) setupClient() error{
 }
 
 
+func (c *Client) preparefiles() error{
+	if len(c.files) >0 {
+		body := &bytes.Buffer{}
+		writer := multipart.NewWriter(body)
+
+		//for each file, write field name,filename,and file content to the body
+
+		for _,file := range c.files {
+			part, err := writer.CreateFormFile(file.fieldName, file.filename)
+			if err != nil {
+				return err
+			}
+			_ , err := io.copy(part, file.file)
+			if err != nil {
+				return err
+			}
+		}
+		err := writer.Close()
+		if err !=nil {
+			return err
+		}
+		//finally ,get the real content type,and set the header
+		multipartContentType := writer.FromDataContentType()
+		c.Header(contentType,multipartContentType)
+		c.body = body
+
+	}
+	return nil
+}
+
+//prepareRequests does all the preparation jobs for "gohttp"
+
 
 
 
